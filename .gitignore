@@ -39,3 +39,4 @@ override.tf.json
 terraform.rc
 terraform/sa-random.txt
 terraform/reader.json
+terraform/cpman.json

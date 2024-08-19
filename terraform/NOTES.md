@@ -110,11 +110,11 @@ cd /workspaces/chkp-vmss-workshop/terraform/08-linux
 make up
 make fwon
 mkdir -p ~/.ssh
-tf output -raw ssh_key > ~/.ssh/linux.key
+terraform output -raw ssh_key > ~/.ssh/linux.key
 cat ~/.ssh/linux.key
 chmod og= ~/.ssh/linux.key
-tf output -raw ssh_config
-tf output -raw ssh_config | tee  ~/.ssh/config
+terraform output -raw ssh_config
+terraform output -raw ssh_config | tee  ~/.ssh/config
 # should get Ubuntu machine prompt
 ssh linux
 # linux

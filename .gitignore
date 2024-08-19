@@ -40,3 +40,5 @@ terraform.rc
 terraform/sa-random.txt
 terraform/reader.json
 terraform/cpman.json
+terraform/05-policy/fingerprints.json
+terraform/05-policy/sid.json

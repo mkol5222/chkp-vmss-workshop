@@ -118,7 +118,7 @@ terraform output -raw ssh_config | tee  ~/.ssh/config
 # should get Ubuntu machine prompt
 ssh linux
 # linux
-curl ip.iol.cz/ip/
+counter=0; while true; do counter=$((counter+1)); echo ; echo "$counter"; curl ip.iol.cz/ip/ -m 2; echo; sleep 3; done
 ping -c 3 1.1.1.1
 ping -c 3 8.8.8.8
 

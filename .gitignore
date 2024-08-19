@@ -38,3 +38,4 @@ override.tf.json
 .terraformrc
 terraform.rc
 terraform/sa-random.txt
+terraform/reader.json

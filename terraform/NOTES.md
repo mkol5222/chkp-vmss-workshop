@@ -1,7 +1,7 @@
 # 58-cross-region-lb
 
 ```bash
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
+cd /workspaces/chkp-vmss-workshop/terraform
 
 # check AZ permissions
 az account list -o table
@@ -12,34 +12,36 @@ az account list -o table
 # all TF requires authenticad Azure API access - we do it based in Service Principal
 # lets create SP first
 
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
+cd /workspaces/chkp-vmss-workshop/terraform
+chmod +x ./00-azsp/create-az-sp.sh
+ls -l ./00-azsp/create-az-sp.sh
 make sp
 # it was stored here and used by rest of TF code
 cat sp.yaml
 
 # tf state should be remote, we need storage for it - storage account name has to be globally unique!!! (visit script for details)
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
+cd /workspaces/chkp-vmss-workshop/terraform
 make tfbackend
 
 # deployment of VMSS is easy
 # I have studied documentation of VMSS readme, cut&paste and customize few elements
 # see https://github.com/CheckPointSW/CloudGuardIaaS/tree/master/terraform/azure/vmss-new-vnet
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
-(cd /workspaces/chkp-vmss-workshop58-cross-region-lb/01-vmss-a; rm -rf .terraform )
+cd /workspaces/chkp-vmss-workshop/terraform
+(cd /workspaces/chkp-vmss-workshop/terraform/01-vmss-a; rm -rf .terraform )
 make vmss1
 
 # policy is pushed from management server. Lets get one in Azure
 # can be done in parallel to VMSS deployment - in one more terminal
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
-(cd /workspaces/chkp-vmss-workshop58-cross-region-lb/04-cpman; rm -rf .terraform )
+cd /workspaces/chkp-vmss-workshop/terraform
+(cd /workspaces/chkp-vmss-workshop/terraform/04-cpman; rm -rf .terraform )
 make cpman
 # BTW code was also created by cut&paste from readme at
 # https://github.com/CheckPointSW/CloudGuardIaaS/tree/master/terraform/azure/management-new-vnet
 
 
 # reader SP would be useful for Azure inventory integration and CME - to bootstrap VMSS gw instances as they are created (e.g. on scale out)
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
-(cd /workspaces/chkp-vmss-workshop58-cross-region-lb/03-reader; rm -rf .terraform )
+cd /workspaces/chkp-vmss-workshop/terraform
+(cd /workspaces/chkp-vmss-workshop/terraform/03-reader; rm -rf .terraform )
 make reader
 # reader is temporary SP, used only for inventory and CME - stored here
 cat reader.json | jq .
@@ -73,8 +75,8 @@ ssh admin@$CPMAN_IP api status
 # under "Overall API Status:"
 
 # once it is the case, we may apply policy
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
-(cd /workspaces/chkp-vmss-workshop58-cross-region-lb/05-policy; rm -rf .terraform )
+cd /workspaces/chkp-vmss-workshop/terraform
+(cd /workspaces/chkp-vmss-workshop/terraform/05-policy; rm -rf .terraform )
 cat ./05-policy/policy_apply.sh
 make policy
 
@@ -87,7 +89,7 @@ export TF_VAR_server=$(cd 04-cpman/; terraform show -json | jq -r '.values.root_
 echo $CPMAN_IP
 
 # once policy is in place, we need VMSS gw instances to be added to management by CME
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
+cd /workspaces/chkp-vmss-workshop/terraform
 make cme
 
 # this returned commands to be run on management server
@@ -104,7 +106,7 @@ find /var -name cme.log
 tail -f /var/log/CPcme/cme.log
 
 ### linux1 VM
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb/08-linux
+cd /workspaces/chkp-vmss-workshop/terraform/08-linux
 make up
 make fwon
 mkdir -p ~/.ssh
@@ -128,27 +130,27 @@ ping -c 3 8.8.8.8
 # CLEANUP
 
 # linux1 VM
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb/08-linux
+cd /workspaces/chkp-vmss-workshop/terraform/08-linux
 make down
 
 # remove reader SP permissions
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
+cd /workspaces/chkp-vmss-workshop/terraform
 make reader-down
 
 # remove management server
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
+cd /workspaces/chkp-vmss-workshop/terraform
 make cpman-down
 
 # lets remove gateways in VMSS
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
+cd /workspaces/chkp-vmss-workshop/terraform
 make vmss1-down
 
 # as last step, remove SP used for TF
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
+cd /workspaces/chkp-vmss-workshop/terraform
 make sp-down
 
 # storage account used for TF state
-cd /workspaces/chkp-vmss-workshop58-cross-region-lb
+cd /workspaces/chkp-vmss-workshop/terraform
 make tfbackend-down
 
 # note there was also shorter way to remove all resources

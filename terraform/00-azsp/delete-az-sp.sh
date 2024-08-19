@@ -4,6 +4,9 @@ set -euo pipefail
 
 . ./00-azsp/spname.sh
 
+# az ad sp list --display-name 58-cross-region-lb -o json | jq -r '.[] | select (."displayName"== "58-cross-region-lb-pkr")
+
+# not exact match!!! (matches substring of name too!)
 SPID=$(az ad sp list --display-name "$SPNAME" --query "[].{id:appId}" -o tsv)
 echo "Checked existing SP id: $SPID"
 

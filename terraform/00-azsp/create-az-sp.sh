@@ -4,7 +4,9 @@ set -euo pipefail
 
 . ./00-azsp/spname.sh
 
-SPID=$(az ad sp list --display-name "$SPNAME" --query "[].{id:appId}" -o tsv)
+echo $RANDOM | tee ./sp-random.txt
+SPPREFIX=$(cat ./sp-random.txt)
+SPID=$(az ad sp list --display-name "$SPPREFIX$SPNAME" --query "[].{id:appId}" -o tsv)
 echo "Checked existing SP id: $SPID"
 
 # stop id SPID exists (not empty string)

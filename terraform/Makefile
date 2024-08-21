@@ -7,9 +7,14 @@ sp-down:
 
 tfbackend:
 	./00-tfbackend/up.sh
-
 tfbackend-down:
 	./00-tfbackend/down.sh
+
+sa:
+	./00-tfbackend/up.sh
+sa-down:
+	./00-tfbackend/down.sh
+
 
 vmss1:
 	(cd ./01-vmss-a && terraform init  -backend-config "storage_account_name=58tfbackend21745$$(cat ../sa-random.txt)" && terraform apply -auto-approve)

@@ -302,6 +302,11 @@ cd /workspaces/chkp-vmss-workshop/terraform
 # actual deployment
 make ha2vmss
 
+# get topo and add-simple-cluster cmd
+chmod +x /workspaces/chkp-vmss-workshop/terraform/11-ha2vmss/gettopo.sh
+dos2unix /workspaces/chkp-vmss-workshop/terraform/11-ha2vmss/gettopo.sh
+/workspaces/chkp-vmss-workshop/terraform/11-ha2vmss/gettopo.sh
+
 # once it is up, we may check cluster members NIC IPs topology
 az vm list-ip-addresses -g  58-ha2vmss  -o table
 

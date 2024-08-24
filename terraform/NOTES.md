@@ -7,6 +7,7 @@ cd /workspaces/chkp-vmss-workshop/terraform
 az account list -o table
 # if not logged in
 az login
+# might need az login --tenant <entra-id-tenantid> form of login as asked by Az CLI
 az account list -o table
 
 # all TF requires authenticad Azure API access - we do it based in Service Principal
@@ -27,21 +28,40 @@ make tfbackend
 # I have studied documentation of VMSS readme, cut&paste and customize few elements
 # see https://github.com/CheckPointSW/CloudGuardIaaS/tree/master/terraform/azure/vmss-new-vnet
 cd /workspaces/chkp-vmss-workshop/terraform
+# this handles cleanup from previous lab runs
 (cd /workspaces/chkp-vmss-workshop/terraform/01-vmss-a; rm -rf .terraform )
+# tf init ;tf apply wrapped here:
 make vmss1
 
 # policy is pushed from management server. Lets get one in Azure
 # can be done in parallel to VMSS deployment - in one more terminal
 cd /workspaces/chkp-vmss-workshop/terraform
+# cleanup from previous lab runs
 (cd /workspaces/chkp-vmss-workshop/terraform/04-cpman; rm -rf .terraform )
+# deploy : tf init ; tf apply wrapped here:
 make cpman
-# BTW code was also created by cut&paste from readme at
+# BTW this code was also created by cut&paste from readme at
 # https://github.com/CheckPointSW/CloudGuardIaaS/tree/master/terraform/azure/management-new-vnet
+# it deploys one more VNET dedicated to Check Point Management server
+
+# BE PATIENT and monitor cpman VM serial console in Azure Portal until Gaia OS login prompt appears!
+# start from VM list and choose "cpman"
+# go to Serial Console under 
+
+```
+This is how Serial Console of cpman VM looks like (see Markdown preview in VScode)
+![alt text](image.png)
+It is showing First time configuration wizard (config_system) that continues with further setup steps and you should continue only once Serial Console is showing GaiaOS login prompt:
 
 
+## Azure Reader credentials for cpman
+
+```shell
 # reader SP would be useful for Azure inventory integration and CME - to bootstrap VMSS gw instances as they are created (e.g. on scale out)
 cd /workspaces/chkp-vmss-workshop/terraform
+# cleanup from previous lab runs
 (cd /workspaces/chkp-vmss-workshop/terraform/03-reader; rm -rf .terraform )
+# actual creation of Azure Reader service principal for CME (VMSS provisioning) and CG Controller (dynamic objects)
 make reader
 # reader is temporary SP, used only for inventory and CME - stored here
 cat reader.json | jq .

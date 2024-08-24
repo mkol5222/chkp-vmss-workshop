@@ -18,6 +18,7 @@ chmod +x ./00-azsp/create-az-sp.sh
 ls -l ./00-azsp/create-az-sp.sh
 sudo apt update; sudo apt install -y dos2unix
 dos2unix ./00-azsp/create-az-sp.sh
+dos2unix ./00-azsp/delete-az-sp.sh; chmod +x ./00-azsp/delete-az-sp.sh
 # cleanup from previous lab runs
 rm ./sp-random.txt
 # actual creation of SP
@@ -31,6 +32,7 @@ cd /workspaces/chkp-vmss-workshop/terraform
 rm ./sa-random.txt
 # actual creation of SA
 dos2unix ./00-tfbackend/up.sh; chmod +x ./00-tfbackend/up.sh
+dos2unix ./00-tfbackend/down.sh; chmod +x ./00-tfbackend/down.sh
 make tfbackend
 
 

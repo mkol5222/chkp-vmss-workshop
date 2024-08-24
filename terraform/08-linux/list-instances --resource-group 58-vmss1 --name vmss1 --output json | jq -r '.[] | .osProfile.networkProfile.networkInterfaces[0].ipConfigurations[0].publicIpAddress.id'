@@ -1,0 +1,346 @@
+[
+  {
+    "diagnosticsProfile": {
+      "bootDiagnostics": {
+        "enabled": true,
+        "storageUri": "https://diaga663191c316a8909.blob.core.windows.net/"
+      }
+    },
+    "etag": "\"1\"",
+    "hardwareProfile": {
+      "vmSize": "Standard_D3_v2"
+    },
+    "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Compute/virtualMachineScaleSets/vmss1/virtualMachines/0",
+    "identity": {
+      "principalId": "6548b4c7-6cee-489f-9501-d85ce563ca24",
+      "tenantId": "01605c2e-84df-4dfc-af6c-4f706350e670",
+      "type": "SystemAssigned"
+    },
+    "instanceId": "0",
+    "latestModelApplied": true,
+    "location": "northeurope",
+    "modelDefinitionApplied": "VirtualMachineScaleSet",
+    "name": "vmss1_0",
+    "networkProfile": {
+      "networkInterfaces": [
+        {
+          "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Compute/virtualMachineScaleSets/vmss1/virtualMachines/0/networkInterfaces/eth0",
+          "primary": true,
+          "resourceGroup": "58-vmss1"
+        },
+        {
+          "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Compute/virtualMachineScaleSets/vmss1/virtualMachines/0/networkInterfaces/eth1",
+          "primary": false,
+          "resourceGroup": "58-vmss1"
+        }
+      ]
+    },
+    "networkProfileConfiguration": {
+      "networkInterfaceConfigurations": [
+        {
+          "disableTcpStateTracking": false,
+          "dnsSettings": {
+            "dnsServers": []
+          },
+          "enableAcceleratedNetworking": true,
+          "enableIPForwarding": true,
+          "ipConfigurations": [
+            {
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/loadBalancers/frontend-lb/backendAddressPools/vmss1-app-1",
+                  "resourceGroup": "58-vmss1"
+                }
+              ],
+              "name": "ipconfig1",
+              "primary": true,
+              "privateIPAddressVersion": "IPv4",
+              "publicIPAddressConfiguration": {
+                "dnsSettings": {
+                  "domainNameLabel": "vmss1-dns-name"
+                },
+                "idleTimeoutInMinutes": 15,
+                "ipTags": [],
+                "name": "vmss1-public-ip",
+                "publicIPAddressVersion": "IPv4"
+              },
+              "subnet": {
+                "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/virtualNetworks/vmss1/subnets/Frontend",
+                "resourceGroup": "58-vmss1"
+              }
+            }
+          ],
+          "name": "eth0",
+          "networkSecurityGroup": {
+            "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/networkSecurityGroups/58-vmss1_nsg",
+            "resourceGroup": "58-vmss1"
+          },
+          "primary": true
+        },
+        {
+          "disableTcpStateTracking": false,
+          "dnsSettings": {
+            "dnsServers": []
+          },
+          "enableAcceleratedNetworking": true,
+          "enableIPForwarding": true,
+          "ipConfigurations": [
+            {
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/loadBalancers/backend-lb/backendAddressPools/backend-lb-pool",
+                  "resourceGroup": "58-vmss1"
+                }
+              ],
+              "name": "ipconfig2",
+              "primary": true,
+              "privateIPAddressVersion": "IPv4",
+              "subnet": {
+                "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/virtualNetworks/vmss1/subnets/Backend",
+                "resourceGroup": "58-vmss1"
+              }
+            }
+          ],
+          "name": "eth1",
+          "primary": false
+        }
+      ]
+    },
+    "osProfile": {
+      "adminUsername": "notused",
+      "allowExtensionOperations": true,
+      "computerName": "vmss1000000",
+      "linuxConfiguration": {
+        "disablePasswordAuthentication": false,
+        "provisionVMAgent": true,
+        "ssh": {
+          "publicKeys": []
+        }
+      },
+      "requireGuestProvisionSignal": true,
+      "secrets": []
+    },
+    "plan": {
+      "name": "sg-byol",
+      "product": "check-point-cg-r8120",
+      "publisher": "checkpoint"
+    },
+    "provisioningState": "Succeeded",
+    "resourceGroup": "58-vmss1",
+    "sku": {
+      "name": "Standard_D3_v2",
+      "tier": "Standard"
+    },
+    "storageProfile": {
+      "dataDisks": [],
+      "imageReference": {
+        "exactVersion": "8120.900634.01641",
+        "offer": "check-point-cg-r8120",
+        "publisher": "checkpoint",
+        "sku": "sg-byol",
+        "version": "latest"
+      },
+      "osDisk": {
+        "caching": "ReadWrite",
+        "createOption": "FromImage",
+        "diskSizeGB": 100,
+        "managedDisk": {
+          "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Compute/disks/vmss1_vmss1_0_OsDisk_1_03f91cc66ba24d77b0fa3d23851294d5",
+          "resourceGroup": "58-vmss1",
+          "storageAccountType": "Standard_LRS"
+        },
+        "name": "vmss1_vmss1_0_OsDisk_1_03f91cc66ba24d77b0fa3d23851294d5",
+        "osType": "Linux",
+        "writeAcceleratorEnabled": false
+      }
+    },
+    "tags": {
+      "chkp-lz-create-date": "2024-08-24T10:01:33.5930310Z",
+      "x-chkp-anti-spoofing": "eth0:false,eth1:false",
+      "x-chkp-ip-address": "public",
+      "x-chkp-management": "mgmt",
+      "x-chkp-management-interface": "eth0",
+      "x-chkp-srcImageUri": "noCustomUri",
+      "x-chkp-template": "vmss_template",
+      "x-chkp-topology": "eth0:external,eth1:internal"
+    },
+    "timeCreated": "2024-08-24T10:01:39.1749717+00:00",
+    "type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines",
+    "vmId": "d99e0b4e-b47c-4910-8138-1b0cb1786f84",
+    "zones": [
+      "1"
+    ]
+  },
+  {
+    "diagnosticsProfile": {
+      "bootDiagnostics": {
+        "enabled": true,
+        "storageUri": "https://diaga663191c316a8909.blob.core.windows.net/"
+      }
+    },
+    "etag": "\"1\"",
+    "hardwareProfile": {
+      "vmSize": "Standard_D3_v2"
+    },
+    "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Compute/virtualMachineScaleSets/vmss1/virtualMachines/1",
+    "identity": {
+      "principalId": "6548b4c7-6cee-489f-9501-d85ce563ca24",
+      "tenantId": "01605c2e-84df-4dfc-af6c-4f706350e670",
+      "type": "SystemAssigned"
+    },
+    "instanceId": "1",
+    "latestModelApplied": true,
+    "location": "northeurope",
+    "modelDefinitionApplied": "VirtualMachineScaleSet",
+    "name": "vmss1_1",
+    "networkProfile": {
+      "networkInterfaces": [
+        {
+          "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Compute/virtualMachineScaleSets/vmss1/virtualMachines/1/networkInterfaces/eth0",
+          "primary": true,
+          "resourceGroup": "58-vmss1"
+        },
+        {
+          "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Compute/virtualMachineScaleSets/vmss1/virtualMachines/1/networkInterfaces/eth1",
+          "primary": false,
+          "resourceGroup": "58-vmss1"
+        }
+      ]
+    },
+    "networkProfileConfiguration": {
+      "networkInterfaceConfigurations": [
+        {
+          "disableTcpStateTracking": false,
+          "dnsSettings": {
+            "dnsServers": []
+          },
+          "enableAcceleratedNetworking": true,
+          "enableIPForwarding": true,
+          "ipConfigurations": [
+            {
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/loadBalancers/frontend-lb/backendAddressPools/vmss1-app-1",
+                  "resourceGroup": "58-vmss1"
+                }
+              ],
+              "name": "ipconfig1",
+              "primary": true,
+              "privateIPAddressVersion": "IPv4",
+              "publicIPAddressConfiguration": {
+                "dnsSettings": {
+                  "domainNameLabel": "vmss1-dns-name"
+                },
+                "idleTimeoutInMinutes": 15,
+                "ipTags": [],
+                "name": "vmss1-public-ip",
+                "publicIPAddressVersion": "IPv4"
+              },
+              "subnet": {
+                "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/virtualNetworks/vmss1/subnets/Frontend",
+                "resourceGroup": "58-vmss1"
+              }
+            }
+          ],
+          "name": "eth0",
+          "networkSecurityGroup": {
+            "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/networkSecurityGroups/58-vmss1_nsg",
+            "resourceGroup": "58-vmss1"
+          },
+          "primary": true
+        },
+        {
+          "disableTcpStateTracking": false,
+          "dnsSettings": {
+            "dnsServers": []
+          },
+          "enableAcceleratedNetworking": true,
+          "enableIPForwarding": true,
+          "ipConfigurations": [
+            {
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/loadBalancers/backend-lb/backendAddressPools/backend-lb-pool",
+                  "resourceGroup": "58-vmss1"
+                }
+              ],
+              "name": "ipconfig2",
+              "primary": true,
+              "privateIPAddressVersion": "IPv4",
+              "subnet": {
+                "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/virtualNetworks/vmss1/subnets/Backend",
+                "resourceGroup": "58-vmss1"
+              }
+            }
+          ],
+          "name": "eth1",
+          "primary": false
+        }
+      ]
+    },
+    "osProfile": {
+      "adminUsername": "notused",
+      "allowExtensionOperations": true,
+      "computerName": "vmss1000001",
+      "linuxConfiguration": {
+        "disablePasswordAuthentication": false,
+        "provisionVMAgent": true,
+        "ssh": {
+          "publicKeys": []
+        }
+      },
+      "requireGuestProvisionSignal": true,
+      "secrets": []
+    },
+    "plan": {
+      "name": "sg-byol",
+      "product": "check-point-cg-r8120",
+      "publisher": "checkpoint"
+    },
+    "provisioningState": "Succeeded",
+    "resourceGroup": "58-vmss1",
+    "sku": {
+      "name": "Standard_D3_v2",
+      "tier": "Standard"
+    },
+    "storageProfile": {
+      "dataDisks": [],
+      "imageReference": {
+        "exactVersion": "8120.900634.01641",
+        "offer": "check-point-cg-r8120",
+        "publisher": "checkpoint",
+        "sku": "sg-byol",
+        "version": "latest"
+      },
+      "osDisk": {
+        "caching": "ReadWrite",
+        "createOption": "FromImage",
+        "diskSizeGB": 100,
+        "managedDisk": {
+          "id": "/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Compute/disks/vmss1_vmss1_1_OsDisk_1_ce1f3b35fb2b46b992d97c2ea454034b",
+          "resourceGroup": "58-vmss1",
+          "storageAccountType": "Standard_LRS"
+        },
+        "name": "vmss1_vmss1_1_OsDisk_1_ce1f3b35fb2b46b992d97c2ea454034b",
+        "osType": "Linux",
+        "writeAcceleratorEnabled": false
+      }
+    },
+    "tags": {
+      "chkp-lz-create-date": "2024-08-24T10:01:33.5930310Z",
+      "x-chkp-anti-spoofing": "eth0:false,eth1:false",
+      "x-chkp-ip-address": "public",
+      "x-chkp-management": "mgmt",
+      "x-chkp-management-interface": "eth0",
+      "x-chkp-srcImageUri": "noCustomUri",
+      "x-chkp-template": "vmss_template",
+      "x-chkp-topology": "eth0:external,eth1:internal"
+    },
+    "timeCreated": "2024-08-24T10:01:39.1749717+00:00",
+    "type": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines",
+    "vmId": "94386c43-1f10-46ae-8277-7bdf6e7b068c",
+    "zones": [
+      "1"
+    ]
+  }
+]

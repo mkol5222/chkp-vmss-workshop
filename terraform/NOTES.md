@@ -140,52 +140,132 @@ We will deploy policy package called "Azure" to cpman in following section.
 cd /workspaces/chkp-vmss-workshop/terraform
 # cleanup from previous lab runs
 (cd /workspaces/chkp-vmss-workshop/terraform/05-policy; rm -rf .terraform )
+# actual policy deployment
 cat ./05-policy/policy_apply.sh
 make policy
 
-# publish
-export TF_VAR_server=$(cd 04-cpman/; terraform show -json | jq -r '.values.root_module.child_modules[0].resources[]|select(.address=="module.cpman.azurerm_public_ip.public-ip")|.values.ip_address' )
-(cd ./05-policy && terraform apply -auto-approve -var publish=true)
 
 # also start SmartConsole and inspect new policy package called Azure; 
 # see user sessions and potential uncommited changes
 echo $CPMAN_IP
+```
+New policy package "Azure" is visible in SmartConsole:
+![alt text](image-2.png)
+
+
+### VMSS instances provisioning to Security Management
+
+VMSS instances already exist in Azure, but they are not yet managed by Check Point Management.
+CME is capable of adding them to management and pushing policy to them automatically.
+CME needs to be configured to do so.
+
+```shell
+
+# see our VMSS instances in Azure
+az vmss list --resource-group 58-vmss1 --output table
 
 # once policy is in place, we need VMSS gw instances to be added to management by CME
 cd /workspaces/chkp-vmss-workshop/terraform
 make cme
 
-# this returned commands to be run on management server
+# this returns commands to be run on management server
 
-# ssh to cpman
+
+# ssh to cpman manuyally
 CPMAN_IP=$(az vm list-ip-addresses  -o json | jq -r '.[] | select(.virtualMachine.name == "cpman") | .virtualMachine.network.publicIpAddresses[0].ipAddress')
-# Welcome@Home#1984
+# top secret lab password is: Welcome@Home#1984
 ssh admin@$CPMAN_IP
+
+# you may also use make ssh to beneft from add-hoc SSH key
+make ssh
 
 # cut and paste 2 autoprov_cfg commands
 # copy one by one and restart CME only after second command
-# once CME is restarted, you may check status
+
+# once CME is restarted, you may check status in CME log
 find /var -name cme.log
 tail -f /var/log/CPcme/cme.log
+```
 
+CME running and disovering VMSS instances in Azure:
+
+![alt text](image-3.png)
+
+Once CME automatically created instaces also in management:
+![alt text](image-5.png)
+
+Azure inventory and Check Point Management server are now in sync:
+![alt text](image-4.png)
+
+**Summary**: 
+CME is able to discover VMSS instances in Azure and add them to Check Point Management server.
+It does SIC (Secure Internal Communication) and pushes policy to them automatically.
+Only once instance has valid policy, health probe is passing and it is added to Azure Load Balancer pool.
+
+Now we may test connectivity to VMSS instances.
+We need machine in VMSS instances VNET to do so.
+
+
+### Linux VM in VMSS protected VNET:
+
+Make sure you are in correct folder and in Codespace terminal:
+
+```shell
 ### linux1 VM
+# dedicated TF folder
 cd /workspaces/chkp-vmss-workshop/terraform/08-linux
+# create Linux VM in VMSS VNET
 make up
+# later we may update routing table to involve VMSS towards Internet
 make fwon
+
+# once VM is up, we may login to it
+# lets setup SSH with the key and ssh config first
 mkdir -p ~/.ssh
 terraform output -raw ssh_key > ~/.ssh/linux.key
 cat ~/.ssh/linux.key
 chmod og= ~/.ssh/linux.key
 terraform output -raw ssh_config
-terraform output -raw ssh_config | tee  ~/.ssh/config
-# should get Ubuntu machine prompt
+terraform output -raw ssh_config | tee -a  ~/.ssh/config
+
+# should get Ubuntu machine prompt simply by
 ssh linux
-# linux
+# on linux
+# create some traffic that can be seen on Check Point logs
 counter=0; while true; do counter=$((counter+1)); echo ; echo "$counter"; curl ip.iol.cz/ip/ -m 2; echo; sleep 3; done
+# notice that server responds with client public IP address
+#   which can be either Linux instance IP or one of VMSS public IP
+
+# some more traffic from linux
 ping -c 3 1.1.1.1
 ping -c 3 8.8.8.8
 
+# back at devops workstation (Codespace)
+# IP of linux VM
+az group list --output table | grep 58-
+LINUX_IP=$(az vm list-ip-addresses -g  58-linux  -o json | jq -r '.[] | select(.virtualMachine.name == "linux") | .virtualMachine.network.publicIpAddresses[0].ipAddress')
+echo "Linux VM Public IP is $LINUX_IP"
+# IP of VM instances in VMSS
+az vmss  list-instance-public-ips -g 58-vmss1 -n vmss1 -o table
 
+
+# devops workstation (Codespace)
+cd /workspaces/chkp-vmss-workshop/terraform/
+# route through FW (via LB)
+make fwon
+
+# check routing table
+az network route-table route list -g 58-linux --route-table-name linux-rt-tf --output table
+# expected
+# 0.0.0.0/0         False             to-internet         VirtualAppliance  Succeeded            58-linux         10.1.2.4
+
+# route directly to Internet
+make fwoff
+# check routing table
+az network route-table route list -g 58-linux --route-table-name linux-rt-tf --output table
+
+
+```
 # new VMSS instance(s) should be added to management - appear in SmartConsole
 # policy package Azure is pushed to them...
 

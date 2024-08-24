@@ -65,3 +65,9 @@ linux:
 	(cd ./08-linux && make up)
 linux-down:
 	(cd ./08-linux && make down)
+
+
+fwon:
+	(cd ./08-linux && make fwon)
+fwoff:
+	(cd ./08-linux && make fwon)

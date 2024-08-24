@@ -8,4 +8,11 @@ resource "checkpoint_management_publish" "example" {
   count    = var.publish ? 1 : 0
   triggers = ["${timestamp()}"]
 
+  depends_on = [
+   resource.checkpoint_management_azure_data_center_server.azureDC,
+   resource.checkpoint_management_data_center_query.allVMs,
+   resource.checkpoint_management_data_center_query.appLinux1,
+   resource.checkpoint_management_access_rule.from_dc1_app_linux1,
+   resource.checkpoint_management_access_rule.from_net_linux
+  ]
 }

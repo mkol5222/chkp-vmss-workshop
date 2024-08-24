@@ -5,5 +5,7 @@ echo "Server IP: $TF_VAR_server"
 
 (cd ./05-policy && terraform init -backend-config "storage_account_name=58tfbackend21745$(cat ../sa-random.txt)" && terraform apply -auto-approve)
 
+echo "Sleeping for few seconds before publishing policy"
 sleep 5
+echo "Publishing policy"
 (cd ./05-policy && terraform apply -auto-approve -var publish=true)

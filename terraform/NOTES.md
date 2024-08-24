@@ -152,6 +152,7 @@ cd /workspaces/chkp-vmss-workshop/terraform
 (cd /workspaces/chkp-vmss-workshop/terraform/05-policy; rm -rf .terraform )
 # actual policy deployment
 cat ./05-policy/policy_apply.sh
+chmod +x ./05-policy/policy_apply.sh; dos2unix ./05-policy/policy_apply.sh
 make policy
 
 
@@ -176,9 +177,16 @@ az vmss list --resource-group 58-vmss1 --output table
 
 # once policy is in place, we need VMSS gw instances to be added to management by CME
 cd /workspaces/chkp-vmss-workshop/terraform
-make cme
+chmod +x  ./06-cme/cme.sh; dos2unix ./06-cme/cme.sh
 
 # this returns commands to be run on management server
+make cme
+
+# enter management and run them manually
+chmod +x ./07-ssh/setup-ssh.sh; dos2unix ./07-ssh/setup-ssh.sh
+make ssh
+
+
 
 
 # ssh to cpman manuyally
@@ -236,7 +244,7 @@ terraform output -raw ssh_key > ~/.ssh/linux.key
 cat ~/.ssh/linux.key
 chmod og= ~/.ssh/linux.key
 terraform output -raw ssh_config
-terraform output -raw ssh_config | tee -a  ~/.ssh/config
+terraform output -raw ssh_config | tee  ~/.ssh/config
 
 # should get Ubuntu machine prompt simply by
 ssh linux

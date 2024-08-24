@@ -46,7 +46,7 @@ mgmt_cli -r true add simple-cluster name "ha2vmss"\
     interfaces.1.name "eth0"\
     interfaces.1.ip-address "${HA1_ETH0_PUB}"\
     interfaces.1.network-mask "255.255.255.0"\
-    interfaces.1.interface-type "cluster + sync"\
+    interfaces.1.interface-type "cluster"\
     interfaces.1.topology "EXTERNAL"\
     interfaces.1.anti-spoofing false \
     interfaces.2.name "eth1"\

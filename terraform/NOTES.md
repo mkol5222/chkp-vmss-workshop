@@ -52,7 +52,26 @@ make cpman
 This is how Serial Console of cpman VM looks like (see Markdown preview in VScode)
 ![alt text](image.png)
 It is showing First time configuration wizard (config_system) that continues with further setup steps and you should continue only once Serial Console is showing GaiaOS login prompt:
+![alt text](image-1.png)
 
+Security Management is now ready to use.
+There is also easy way to get to the prompt:
+```shell
+make ssh
+```
+
+This created add-hoc SSH key and saved it to cpman using Check Point Management's `run-script` API.
+
+It will also tell you Management IP address:
+```
+cpman_ip: 104.40.154.219
+```
+and lab password is:
+```
+Welcome@Home#1984
+```
+
+So you may open your SmartConsole R82.10 too.
 
 ## Azure Reader credentials for cpman
 

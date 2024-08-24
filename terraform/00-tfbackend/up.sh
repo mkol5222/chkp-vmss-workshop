@@ -1,6 +1,13 @@
 #!/bin/bash
 set -euxo pipefail
 
+# does sa-random.txt exist?
+if [ -f ./sa-random.txt ]; then
+  echo "sa-random.txt does not exists. Sure you want to continue?"
+  echo "rm ./sa-random.txt , if you want to continue"
+  exit 1
+fi
+
 echo $RANDOM | tee ./sa-random.txt
 
 # https://learn.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli

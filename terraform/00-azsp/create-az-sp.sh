@@ -4,6 +4,13 @@ set -euo pipefail
 
 . ./00-azsp/spname.sh
 
+# does sp-random.txt exist?
+if [ -f ./sp-random.txt ]; then
+  echo "sp-random.txt does not exists. Sure you want to continue?"
+  echo "rm ./sp-random.txt , if you want to continue"
+  exit 1
+fi
+
 echo $RANDOM | tee ./sp-random.txt
 SPPREFIX=$(cat ./sp-random.txt)
 SPID=$(az ad sp list --display-name "$SPPREFIX$SPNAME" --query "[].{id:appId}" -o tsv)

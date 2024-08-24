@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# just in case...
+mkdir ~/.ssh
+
 # Create a new SSH key pair
 (cd ~/.ssh && ssh-keygen -t rsa -b 2048 -f 58-ssh -N "")
 # check
@@ -101,6 +104,7 @@ echo "$res" | jq -r '.tasks[0]."task-details"[0].responseMessage' | base64 -d
 # chmod u=rwx,g=,o=  ~/.ssh/authorized_keys 
 
 echo "Login to cpman"
+echo "cpman_ip: $CPMAN_IP"
 echo "ssh -i ~/.ssh/58-ssh admin@$CPMAN_IP"
 
 ssh -i ~/.ssh/58-ssh admin@$CPMAN_IP

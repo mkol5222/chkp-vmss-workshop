@@ -1,4 +1,7 @@
 
+welcome:
+	echo "Welcome"
+
 sp:
 	./00-azsp/create-az-sp.sh
 

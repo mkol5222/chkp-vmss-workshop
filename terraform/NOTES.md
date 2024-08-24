@@ -16,12 +16,18 @@ az account list -o table
 cd /workspaces/chkp-vmss-workshop/terraform
 chmod +x ./00-azsp/create-az-sp.sh
 ls -l ./00-azsp/create-az-sp.sh
+# cleanup from previous lab runs
+rm ./sp-random.txt
+# actual creation of SP
 make sp
 # it was stored here and used by rest of TF code
 cat sp.yaml
 
 # tf state should be remote, we need storage for it - storage account name has to be globally unique!!! (visit script for details)
 cd /workspaces/chkp-vmss-workshop/terraform
+# cleanup from previous lab runs
+rm ./sa-random.txt
+# actual creation of SA
 make tfbackend
 
 # deployment of VMSS is easy
@@ -87,34 +93,52 @@ cat reader.json | jq .
 # other TF code and CME will use it later
 
 # lets check if VMSS is up and running
+# our RGs
 az group list --output table | grep 58-
+# and 58-vmss1 should contain our VMSS
 az vmss list --resource-group 58-vmss1 --output table
 
 # lets check if management server is up and running
 az group list --output table | grep 58-
+# and 58-cpman should contain our cpman
 az vm list --resource-group 58-cpman --output table
-# what is cpman IP?
-az vm list-ip-addresses  -o json | jq -r '.[] | select(.virtualMachine.name == "cpman") | .virtualMachine.network.publicIpAddresses[0].ipAddress'
-# user is admin, password is Welcome@Home#1984 ;-) - lets login
-CPMAN_IP=$(az vm list-ip-addresses  -o json | jq -r '.[] | select(.virtualMachine.name == "cpman") | .virtualMachine.network.publicIpAddresses[0].ipAddress')
 
+# what is cpman IP address?
+az vm list-ip-addresses -g  58-cpman  -o json | jq -r '.[] | select(.virtualMachine.name == "cpman") | .virtualMachine.network.publicIpAddresses[0].ipAddress'
+# user is admin, password is Welcome@Home#1984 ;-) - lets login
+CPMAN_IP=$(az vm list-ip-addresses -g  58-cpman   -o json | jq -r '.[] | select(.virtualMachine.name == "cpman") | .virtualMachine.network.publicIpAddresses[0].ipAddress')
+
+# once we have IP, we may login to cpman
 echo $CPMAN_IP
 ssh admin@$CPMAN_IP
+# password is Welcome@Home#1984
+
+# review VM initialization logs
 ssh admin@$CPMAN_IP tail -f  /var/log/cloud_config.log 
-ssh admin@$CPMAN_IP cat  /var/log/cloud_config.log 
+ssh admin@$CPMAN_IP cat /var/log/cloud_config.log  | less
+
 # visit cpman VM in Azure portal and check serial console
 # https://portal.azure.com/#browse/Microsoft.Compute%2FVirtualMachines
-
-# you schould see FTCW and cloud-init logs done first
-# then you may continue ...
-ssh admin@$CPMAN_IP cat /var/log/cloud_config.log 
+# choose cpman and go to Serial Console
 
 # confirm Mgmt is ready once API is ready
 ssh admin@$CPMAN_IP api status
 # under "Overall API Status:"
+ssh admin@$CPMAN_IP api status | grep "API readiness "
 
+# expecting:
+# API readiness test SUCCESSFUL. The server is up and ready to receive connections
+```
+
+## Policy deployment
+
+Even security policy can be managed by Terraform.
+We will deploy policy package called "Azure" to cpman in following section.
+
+```shell
 # once it is the case, we may apply policy
 cd /workspaces/chkp-vmss-workshop/terraform
+# cleanup from previous lab runs
 (cd /workspaces/chkp-vmss-workshop/terraform/05-policy; rm -rf .terraform )
 cat ./05-policy/policy_apply.sh
 make policy

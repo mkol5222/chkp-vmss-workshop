@@ -256,16 +256,26 @@ make fwon
 
 # check routing table
 az network route-table route list -g 58-linux --route-table-name linux-rt-tf --output table
-# expected
+# AddressPrefix     HasBgpOverride    Name                NextHopType       ProvisioningState    ResourceGroup    NextHopIpAddress
+# ----------------  ----------------  ------------------  ----------------  -------------------  ---------------  ------------------
+# ----------------  ----------------  ------------------  -------------  -------------------  ---------------
 # 0.0.0.0/0         False             to-internet         VirtualAppliance  Succeeded            58-linux         10.1.2.4
 
 # route directly to Internet
 make fwoff
 # check routing table
 az network route-table route list -g 58-linux --route-table-name linux-rt-tf --output table
+# expected
+# AddressPrefix     HasBgpOverride    Name                NextHopType    ProvisioningState    ResourceGroup
+# ----------------  ----------------  ------------------  -------------  -------------------  ---------------
+# 0.0.0.0/0         False             to-internet         Internet       Succeeded            58-linux
 
-
+# RT may also be monitored with
+watch -d 'az network route-table route list -g 58-linux --route-table-name linux-rt-tf --output table'
 ```
+
+### Cleanup
+```shell
 # new VMSS instance(s) should be added to management - appear in SmartConsole
 # policy package Azure is pushed to them...
 

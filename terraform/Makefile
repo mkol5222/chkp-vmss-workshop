@@ -70,4 +70,4 @@ linux-down:
 fwon:
 	(cd ./08-linux && make fwon)
 fwoff:
-	(cd ./08-linux && make fwon)
+	(cd ./08-linux && make fwoff)

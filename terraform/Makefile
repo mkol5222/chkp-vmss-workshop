@@ -62,7 +62,7 @@ cpman-down:
 
 cme:
 	./06-cme/cme.sh
-down: linux-down vmss1-down reader-down cpman-down tfbackend-down sp-down 
+down: ha2vmss-down linux-down vmss1-down reader-down cpman-down tfbackend-down sp-down 
 
 ssh:
 	(cd ./07-ssh && ./setup-ssh.sh)

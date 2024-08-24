@@ -280,6 +280,56 @@ az network route-table route list -g 58-linux --route-table-name linux-rt-tf --o
 watch -d 'az network route-table route list -g 58-linux --route-table-name linux-rt-tf --output table'
 ```
 
+### Optional: CPHA deployment to VMSS1 VNET
+
+```shell
+# CPHA deployment
+cd /workspaces/chkp-vmss-workshop/terraform
+# cleanup from previous lab runs
+(cd /workspaces/chkp-vmss-workshop/terraform/11-ha2vmss; rm -rf .terraform )
+# actual deployment
+make ha2vmss
+
+# once it is up, we may check cluster members NIC IPs topology
+az vm list-ip-addresses -g  58-ha2vmss  -o table
+
+# notice ha1 owns cluster VIP - one extra IP
+
+# VirtualMachine    PublicIPAddresses              PrivateIPAddresses
+# ----------------  -----------------------------  ---------------------
+# ha1               52.178.143.141,52.138.221.185  10.1.1.105,10.1.1.107
+# ha1                                              10.1.2.106
+# ha2               52.178.137.158                 10.1.1.106
+# ha2                                              10.1.2.107
+
+# az vm list-ip-addresses --resource-group MyResourceGroup --name MyVm
+az vm list-ip-addresses -g  58-ha2vmss  -n ha1 -o table 
+
+az vm list-ip-addresses -g  58-ha2vmss  -n ha2 -o table 
+
+# in detail
+az vm list-ip-addresses -g  58-ha2vmss  -n ha1 -o json
+az vm list-ip-addresses -g  58-ha2vmss  -n ha2 -o json
+
+# NICS:
+az vm nic list --resource-group 58-ha2vmss --vm-name ha1
+az vm nic list --resource-group 58-ha2vmss --vm-name ha2
+
+az network nic show -g  58-ha2vmss -n ha1-eth0
+az network nic show -g  58-ha2vmss -n ha1-eth1
+
+az network nic show -g  58-ha2vmss -n ha2-eth0
+az network nic show -g  58-ha2vmss -n ha2-eth1
+
+az network nic show -g  58-ha2vmss -n ha1-eth0 | jq -r '.ipConfigurations[0]' 
+az network nic show -g  58-ha2vmss -n ha1-eth0 | jq -r '.ipConfigurations[0].privateIPAddress'
+az network nic show -g  58-ha2vmss -n ha1-eth0 | jq -r '.ipConfigurations[0].publicIPAddress.id'
+
+az network public-ip show --ids $(az network nic show -g  58-ha2vmss -n ha1-eth0 | jq -r '.ipConfigurations[0].publicIPAddress.id')
+# VIP
+az network public-ip show --ids $(az network nic show -g  58-ha2vmss -n ha1-eth0 | jq -r '.ipConfigurations[1].publicIPAddress.id') | jq -r '.ipAddress'
+```
+
 ### Cleanup
 ```shell
 # new VMSS instance(s) should be added to management - appear in SmartConsole
@@ -287,6 +337,10 @@ watch -d 'az network route-table route list -g 58-linux --route-table-name linux
 
 ##########################################
 # CLEANUP
+
+# ha2vmms (optional)
+cd /workspaces/chkp-vmss-workshop/terraform
+make ha2vmss-down
 
 # linux1 VM
 cd /workspaces/chkp-vmss-workshop/terraform/08-linux

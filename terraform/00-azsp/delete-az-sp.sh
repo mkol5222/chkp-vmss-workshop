@@ -5,6 +5,7 @@ set -euo pipefail
 . ./00-azsp/spname.sh
 SPPREFIX=$(cat ./sp-random.txt)
 FULLSPNAME="$SPPREFIX$SPNAME"
+echo "Deleting SP $FULLSPNAME"
 # az ad sp list --display-name 58-cross-region-lb -o json | jq -r '.[] | select (."displayName"== "58-cross-region-lb-pkr")
 
 # not exact match!!! (matches substring of name too!)
@@ -25,6 +26,10 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
   exit 1
 fi
 
-echo "Deleting SP $FULLSPNAME"
+echo "Deleting SP $FULLSPNAME = $SPID"
 az ad sp delete --id $SPID
 rm -f sp.yaml
+
+# list all SPs remaining
+echo "Listing all SPs remaining:"
+az ad sp list --show-mine -o table

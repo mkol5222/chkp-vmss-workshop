@@ -22,6 +22,12 @@ sa-down:
 vmss1:
 	(cd ./01-vmss-a && terraform init  -backend-config "storage_account_name=58tfbackend21745$$(cat ../sa-random.txt)" && terraform apply -auto-approve)
 
+ha2vmss:
+	(cd ./11-ha2vmss && terraform init  -backend-config "storage_account_name=58tfbackend21745$$(cat ../sa-random.txt)" && terraform apply -auto-approve)
+ha2vmss-down:
+	(cd ./11-ha2vmss && terraform destroy -auto-approve)
+
+
 ha:
 	(cd ./10-ha && terraform init  -backend-config "storage_account_name=58tfbackend21745$$(cat ../sa-random.txt)" && terraform apply -auto-approve)
 ha-down:

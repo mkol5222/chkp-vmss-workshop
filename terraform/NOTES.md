@@ -30,6 +30,12 @@ rm ./sa-random.txt
 # actual creation of SA
 make tfbackend
 
+# approve image terms in azure marketplace
+# az vm image terms accept --urn publisher:offer:sku:version
+az vm image terms accept --urn checkpoint:check-point-cg-r8120:mgmt-byol:latest
+# az vm image terms accept --urn Canonical:UbuntuServer:18.04-LTS:latest
+az vm image terms accept --urn checkpoint:check-point-cg-r8120:sg-byol:latest
+
 # deployment of VMSS is easy
 # I have studied documentation of VMSS readme, cut&paste and customize few elements
 # see https://github.com/CheckPointSW/CloudGuardIaaS/tree/master/terraform/azure/vmss-new-vnet

@@ -27,8 +27,8 @@ module "ha" {
   vnet_resource_group            =  var.vnet_resource_group # "existing-vnet"
   frontend_subnet_name           =  var.frontend_subnet_name # "frontend"
   backend_subnet_name            =  var.backend_subnet_name # "backend"
-  frontend_IP_addresses          = [5, 6, 7]
-  backend_IP_addresses           = [5, 6, 7]
+  frontend_IP_addresses          = [105, 106, 107]
+  backend_IP_addresses           = [105, 106, 107]
   admin_password                 = "Welcome@Home#1984"
   smart_1_cloud_token_a          = ""
   smart_1_cloud_token_b          = ""
@@ -37,7 +37,7 @@ module "ha" {
   disk_size                      = "110"
   vm_os_sku                      = "sg-byol"
   vm_os_offer                    = "check-point-cg-r8120"
-  os_version                     = "R8110"
+  os_version                     = "R8120"
   bootstrap_script               = "touch /home/admin/bootstrap.txt; echo 'hello_world' > /home/admin/bootstrap.txt"
   allow_upload_download          = true
   authentication_type            = "Password"

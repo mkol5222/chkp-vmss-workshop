@@ -33,6 +33,7 @@ rm ./sa-random.txt
 dos2unix ./00-tfbackend/up.sh; chmod +x ./00-tfbackend/up.sh
 make tfbackend
 
+
 # approve image terms in azure marketplace
 # az vm image terms accept --urn publisher:offer:sku:version
 az vm image terms accept --urn checkpoint:check-point-cg-r8120:mgmt-byol:latest

@@ -78,5 +78,7 @@ make ssh-linux:
 
 fwon:
 	(cd ./08-linux && make fwon)
+haon:
+	(cd ./08-linux && make haon)
 fwoff:
 	(cd ./08-linux && make fwoff)

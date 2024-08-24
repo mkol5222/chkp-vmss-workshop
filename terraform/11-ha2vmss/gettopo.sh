@@ -25,7 +25,7 @@ cat <<EOF
 NIC  VIP             VIP Public      HA1             HA1 Public      HA2             HA2 Public
 ---- --------------- --------------- --------------- --------------- --------------- ---------------
 eth0 $(printf '%-15s' "$VIP") $(printf '%-15s' "$VIP_PUB") $(printf '%-15s' "$HA1_ETH0") $(printf '%-15s' "$HA1_ETH0_PUB") $(printf '%-15s' "$HA2_ETH0") $(printf '%-15s' "$HA2_ETH0_PUB")
-eth1 $(printf '%-15s' " ") $(printf '%-15s' " ") $(printf '%-15s' "$HA1_ETH1") $(printf '%-15s' "$HA2_ETH1")
+eth1 $(printf '%-15s' " ") $(printf '%-15s' " ") $(printf '%-15s' "$HA1_ETH1") $(printf '%-15s' " ") $(printf '%-15s' "$HA2_ETH1")
 EOF
 
 echo
@@ -44,7 +44,7 @@ mgmt_cli -r true add simple-cluster name "ha2vmss"\
     firewall true\
     vpn false\
     interfaces.1.name "eth0"\
-    interfaces.1.ip-address "${HA1_ETH0_PUB}"\
+    interfaces.1.ip-address "${HA1_ETH0}"\
     interfaces.1.network-mask "255.255.255.0"\
     interfaces.1.interface-type "cluster"\
     interfaces.1.topology "EXTERNAL"\

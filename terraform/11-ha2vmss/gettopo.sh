@@ -35,7 +35,7 @@ echo
 
 cat <<EOF
 # Add simple cluster
-mgmt_cli -r true add simple-cluster name "${ha2vmss}"\
+mgmt_cli -r true add simple-cluster name "ha2vmss"\
     color "pink"\
     version "R81.20"\
     ip-address "${VIP_PUB}"\

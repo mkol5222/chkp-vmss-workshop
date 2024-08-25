@@ -2,6 +2,10 @@
 welcome:
 	echo "Welcome"
 
+
+up:
+	cd /workspaces/chkp-vmss-workshop/terraform; ./1stcleanyp.sh
+	sp sa vmss1 reader cpman linux ha2vmss
 sp:
 	./00-azsp/create-az-sp.sh
 

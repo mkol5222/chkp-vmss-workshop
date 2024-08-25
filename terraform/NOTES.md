@@ -10,9 +10,14 @@ az login
 # might need az login --tenant <entra-id-tenantid> form of login as asked by Az CLI
 az account list -o table
 
+# dependencies
+sudo apt update; sudo apt install sshpass -y
+mkdir ~/.ssh
+# initial cleanup
+# TODO: add cleanup script
+
 # all TF requires authenticad Azure API access - we do it based in Service Principal
 # lets create SP first
-
 cd /workspaces/chkp-vmss-workshop/terraform
 chmod +x ./00-azsp/create-az-sp.sh
 ls -l ./00-azsp/create-az-sp.sh

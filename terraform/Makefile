@@ -82,3 +82,5 @@ haon:
 	(cd ./08-linux && make haon)
 fwoff:
 	(cd ./08-linux && make fwoff)
+ssh-linux:
+	(cd ./08-linux && make ssh)

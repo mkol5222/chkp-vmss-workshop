@@ -21,6 +21,7 @@ HA2_ETH1=$(az network nic show -g  58-ha2vmss -n ha2-eth1 | jq -r '.ipConfigurat
 echo "HA2: $HA2_ETH0 ($HA2_ETH0_PUB) $HA2_ETH1"
 
 # whole table
+echo
 cat <<EOF
 NIC  VIP             VIP Public      HA1             HA1 Public      HA2             HA2 Public
 ---- --------------- --------------- --------------- --------------- --------------- ---------------
@@ -44,7 +45,7 @@ mgmt_cli -r true add simple-cluster name "ha2vmss"\
     firewall true\
     vpn false\
     interfaces.1.name "eth0"\
-    interfaces.1.ip-address "${HA1_ETH0}"\
+    interfaces.1.ip-address "${VIP}"\
     interfaces.1.network-mask "255.255.255.0"\
     interfaces.1.interface-type "cluster"\
     interfaces.1.topology "EXTERNAL"\

@@ -11,7 +11,7 @@ az login
 az account list -o table
 
 # dependencies
-sudo apt update; sudo apt install sshpass -y
+sudo apt update; sudo apt install sshpass dos2unix -y
 mkdir ~/.ssh
 # initial cleanup
 # TODO: add cleanup script
@@ -21,7 +21,6 @@ mkdir ~/.ssh
 cd /workspaces/chkp-vmss-workshop/terraform
 chmod +x ./00-azsp/create-az-sp.sh
 ls -l ./00-azsp/create-az-sp.sh
-sudo apt update; sudo apt install -y dos2unix
 dos2unix ./00-azsp/create-az-sp.sh
 dos2unix ./00-azsp/delete-az-sp.sh; chmod +x ./00-azsp/delete-az-sp.sh
 # cleanup from previous lab runs
@@ -249,18 +248,14 @@ make fwon
 
 # once VM is up, we may login to it
 # lets setup SSH with the key and ssh config first
-mkdir -p ~/.ssh
-terraform output -raw ssh_key > ~/.ssh/linux.key
-cat ~/.ssh/linux.key
-chmod og= ~/.ssh/linux.key
-terraform output -raw ssh_config
-terraform output -raw ssh_config | tee  ~/.ssh/config
-
-# should get Ubuntu machine prompt simply by
+chmod +x ./08-linux/ssh-linux.sh; dos2unix ./08-linux/ssh-linux.sh
+make ssh-linux
+# should get Ubuntu machine prompt later simply by
 ssh linux
 # on linux
 # create some traffic that can be seen on Check Point logs
-counter=0; while true; do counter=$((counter+1)); echo ; echo "$counter"; curl ip.iol.cz/ip/ -m 2; echo; sleep 3; done
+counter=0; while true; do counter=$((counter+1)); echo ; echo "$counter $(date)"; curl ifconfig.me -m 2; echo; sleep 3; done
+#counter=0; while true; do counter=$((counter+1)); echo ; echo "$counter"; curl ip.iol.cz/ip/ -m 2; echo; sleep 3; done
 # notice that server responds with client public IP address
 #   which can be either Linux instance IP or one of VMSS public IP
 

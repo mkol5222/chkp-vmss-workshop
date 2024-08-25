@@ -12,3 +12,5 @@ fwoff:
 
 down:
 	terraform destroy -auto-approve
+ssh:
+	(cd /workspaces/chkp-vmss-workshop/terraform/08-linux && ./ssh-linux.sh; ssh -o "StrictHostKeyChecking no" linux)

@@ -76,8 +76,8 @@ linux:
 linux-down:
 	(cd ./08-linux && make down)
 
-make ssh-linux:
-	ssh linux
+# ssh-linux:
+# 	ssh linux
 
 
 fwon:

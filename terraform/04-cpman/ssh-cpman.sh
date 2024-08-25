@@ -20,7 +20,7 @@ done
 
 while true; do
     echo "Checking if API is ready"
-    RES=$(echo "Welcome@Home#1984" | sshpass ssh  -o ConnectTimeout=10  -o "StrictHostKeyChecking no" admin@$CPMAN_IP 'api status' | grep 'API readiness' | grep -Po '(?<=API readiness test )(SUCCESSFUL)')
+    RES=$(echo "Welcome@Home#1984" | sshpass ssh  -o ConnectTimeout=10  -o "StrictHostKeyChecking no" admin@$CPMAN_IP 'api status' 2>/dev/null | grep 'API readiness' | grep -Po '(?<=API readiness test )(SUCCESSFUL)')
     if [ "$RES" == "SUCCESSFUL" ]; then
         echo "API is ready"
         break;

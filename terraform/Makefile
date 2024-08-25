@@ -93,3 +93,8 @@ up: 1stclean sp sa vmss1 reader cpman linux ha2vmss
   
 ssh-cpman:
 	./04-cpman/ssh-cpman.sh
+
+ssh-ha1:
+	./11-ha2vmss/ssh-ha1.sh
+ssh-ha2:
+	./11-ha2vmss/ssh-ha2.sh

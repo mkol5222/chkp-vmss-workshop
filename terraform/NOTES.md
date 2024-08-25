@@ -308,10 +308,27 @@ cd /workspaces/chkp-vmss-workshop/terraform
 # actual deployment
 make ha2vmss
 
+# assign role for VIP changes
+(cd /workspaces/chkp-vmss-workshop/terraform/12-ha-role; terraform init; terraform apply -auto-approve)
+
+# see what instance does on failover in Azure:
+# az monitor activity-log list  --caller 806b5867-050f-4e2c-9ebb-abe6d6be154b | jq -r '.[].authorization | [.action, .scope] | @csv'
+
+HA1ID=$(az vm list -g 58-ha2vmss -o json | jq -r '.[] | select(.name == "ha1") | .identity.principalId')
+HA2ID=$(az vm list -g 58-ha2vmss -o json | jq -r '.[] | select(.name == "ha2") | .identity.principalId')
+echo $HA1ID $HA2ID
+
+az monitor activity-log list  --caller $HA1ID | jq -r '.[].authorization | [.action, .scope] | @csv'
+az monitor activity-log list  --caller $HA2ID | jq -r '.[].authorization | [.action, .scope] | @csv'
+
+
 # get topo and add-simple-cluster cmd
 chmod +x /workspaces/chkp-vmss-workshop/terraform/11-ha2vmss/gettopo.sh
 dos2unix /workspaces/chkp-vmss-workshop/terraform/11-ha2vmss/gettopo.sh
 /workspaces/chkp-vmss-workshop/terraform/11-ha2vmss/gettopo.sh
+
+# run add-simple-cluster on cpman!
+
 
 # once it is up, we may check cluster members NIC IPs topology
 az vm list-ip-addresses -g  58-ha2vmss  -o table

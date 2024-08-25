@@ -54,7 +54,3 @@ resource "azurerm_role_assignment" "ha2_virtual_machine_contributor_assignment" 
   principal_id = local.ha2_id
 }
 
-provider "azurerm" {
-  # Configuration options
-  features {}
-}

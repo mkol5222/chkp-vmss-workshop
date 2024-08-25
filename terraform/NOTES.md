@@ -71,6 +71,9 @@ make cpman
 # start from VM list and choose "cpman"
 # go to Serial Console under 
 
+# wait for API readiness and SSH prompt to CPMAN
+./04-cpman/ssh-cpman.sh
+
 ```
 This is how Serial Console of cpman VM looks like (see Markdown preview in VScode)
 ![alt text](image.png)

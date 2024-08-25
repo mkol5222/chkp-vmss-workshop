@@ -1,17 +1,17 @@
 #!/bin/bash
 
-CPMAN_IP=$(az vm list-ip-addresses -g  58-cpman   -o json | jq -r '.[] | select(.virtualMachine.name == "cpman") | .virtualMachine.network.publicIpAddresses[0].ipAddress')
-echo "CPMAN IP: $CPMAN_IP"
 
-while true; do 
+while true; do
+    CPMAN_IP=$(az vm list-ip-addresses -g  58-cpman   -o json | jq -r '.[] | select(.virtualMachine.name == "cpman") | .virtualMachine.network.publicIpAddresses[0].ipAddress')
+    echo "CPMAN IP: $CPMAN_IP"
+ 
     echo "Checking if VM is ready"
     if [ -z "$CPMAN_IP" ]; then
         echo "CPMAN IP not found"
         # echo "Try again later once the VM is created"
         echo "Retrying in 5 seconds"
     else 
-        echo "CPMAN IP found"
-        echo "CPMAN IP: $CPMAN_IP"
+        echo "CPMAN IP found"    
         break;
     fi
     sleep 5

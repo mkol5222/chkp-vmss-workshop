@@ -3,9 +3,7 @@ welcome:
 	echo "Welcome"
 
 
-up:
-	cd /workspaces/chkp-vmss-workshop/terraform; ./1stcleanyp.sh
-	sp sa vmss1 reader cpman linux ha2vmss
+
 sp:
 	./00-azsp/create-az-sp.sh
 
@@ -88,3 +86,10 @@ fwoff:
 	(cd ./08-linux && make fwoff)
 ssh-linux:
 	(cd ./08-linux && make ssh)
+
+1stclean:
+	(cd /workspaces/chkp-vmss-workshop/terraform; ./1stcleanyp.sh)
+up: 1stclean sp sa vmss1 reader cpman linux ha2vmss
+  
+ssh-cpman:
+	./04-cpman/ssh-cpman.sh

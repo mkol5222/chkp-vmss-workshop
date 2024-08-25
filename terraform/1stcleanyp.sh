@@ -7,6 +7,7 @@ echo "04-cpman"
 echo "03-reader"
 echo "05-policy"
 echo "11-ha2vmss"
+echo "And it will also remove sp-random.txt and sp-random.txt."
 echo "Do you want to continue? (y/n)"
 read -n 1 -r
 echo
@@ -14,7 +15,8 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
     exit 1
 fi
-
+rm -f /workspaces/chkp-vmss-workshop/terraform/sp-random.txt
+rm -f /workspaces/chkp-vmss-workshop/terraform/sa-random.txt
 (cd /workspaces/chkp-vmss-workshop/terraform/01-vmss-a; rm -rf .terraform )
 (cd /workspaces/chkp-vmss-workshop/terraform/04-cpman; rm -rf .terraform )
 (cd /workspaces/chkp-vmss-workshop/terraform/03-reader; rm -rf .terraform )

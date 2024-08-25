@@ -15,6 +15,7 @@ sudo apt update; sudo apt install sshpass dos2unix -y
 mkdir ~/.ssh
 # initial cleanup
 # TODO: add cleanup script
+cd /workspaces/chkp-vmss-workshop/terraform; ./1stcleanyp.sh
 
 # all TF requires authenticad Azure API access - we do it based in Service Principal
 # lets create SP first

@@ -371,12 +371,22 @@ az network public-ip show --ids $(az network nic show -g  58-ha2vmss -n ha1-eth0
 ```
 
 ### Cleanup
+
+Make sure HA1 is active before cleanup! This can be done by
+```shell
+make ssh-ha2
+# on ha2
+ clusterXL_admin down
+```
+
 ```shell
 # new VMSS instance(s) should be added to management - appear in SmartConsole
 # policy package Azure is pushed to them...
 
 ##########################################
 # CLEANUP
+
+
 
 # ha2vmms (optional)
 cd /workspaces/chkp-vmss-workshop/terraform

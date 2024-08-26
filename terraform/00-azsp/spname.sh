@@ -1,1 +1,1 @@
-SPNAME='58-cross-region-lb'
+SPNAME='58-sp-lab'

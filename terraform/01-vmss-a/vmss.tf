@@ -1,13 +1,13 @@
 resource "random_id" "vmssid" {
   keepers = {
-    terraform_data = terraform_data.keeper.input
+    terraform_data = "aaa" #terraform_data.keeper.input
   }
   byte_length = 8
 }
 
-resource "terraform_data" "keeper" {
-  input = "aaa"
-}
+# resource "terraform_data" "keeper" {
+#   input = "aaa"
+# }
 
 module "vmss" {
    

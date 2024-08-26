@@ -1,4 +1,4 @@
-# 58-cross-region-lb
+# CloudGuard CGNS in Azure - workshop notes
 
 ```bash
 cd /workspaces/chkp-vmss-workshop/terraform

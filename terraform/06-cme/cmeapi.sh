@@ -75,11 +75,16 @@ curl -ks -X POST $mgmt_server/web_api/cme-api/v1.2/accounts/azure \
 # Request: POST https://127.1.2.3/web_api/cme-api/v1.2/gwConfigurations/azure
 # Headers: Content-Type: application/json, X-chkp-sid: 111111
 # Body: {"name" : "azure_gw_configuration", "base64_sic_key" : "Base64SIC", "version" : "R81.20", "policy" : "Standard", "related_account" : "my_account"}
-
-TEMPLATE_BODY=$(echo '{"name" : "vmss_template", "blades": { "ips": true, "identity-awareness": true}, "base64_sic_key" : "MTIzNDU2Nzg=", "version" : "R81.20", "policy" : "Azure", "related_account" : "my_account"}' ) #\
+# d2VsY29tZWhvbWUxOTg0 vs MTIzNDU2Nzg=
+TEMPLATE_BODY=$(echo '{"name" : "vmss_template", "blades": { "ips": true, "identity-awareness": true}, "base64_sic_key" : "d2VsY29tZWhvbWUxOTg0=", "version" : "R81.20", "policy" : "Azure", "related_account" : "my_account"}' ) #\
     #| jq -c --arg S "$(echo welcomehome1984|base64)" '.base64_sic_key=$S | .' )
 
 echo "$TEMPLATE_BODY" | jq .
+
+curl -ks -X DELETE $mgmt_server/web_api/cme-api/v1.2/gwConfigurations/vmss_template \
+  -H "Content-Type: application/json" \
+  -H "X-chkp-sid: $sid" 
+  
 
 curl -ks -X POST $mgmt_server/web_api/cme-api/v1.2/gwConfigurations/azure \
   -H "Content-Type: application/json" \

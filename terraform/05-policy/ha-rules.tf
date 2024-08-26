@@ -1,8 +1,8 @@
 resource "checkpoint_management_access_rule" "ha-ssh" {
-  layer = "${checkpoint_management_package.ha.name} Network"
+  layer    = "${checkpoint_management_package.ha.name} Network"
   position = { above = checkpoint_management_access_rule.ha-from_net_linux.id }
   #position = { top = "top" }
-  name     = "allow SSH"
+  name = "allow SSH"
 
   source = ["Any"]
 

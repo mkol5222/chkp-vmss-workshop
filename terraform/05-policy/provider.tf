@@ -1,5 +1,5 @@
 terraform {
-    # https://developer.hashicorp.com/terraform/language/settings/backends/azurerm
+  # https://developer.hashicorp.com/terraform/language/settings/backends/azurerm
   backend "azurerm" {
     resource_group_name  = "58-tfbackend"
     storage_account_name = "58tfbackend21745"

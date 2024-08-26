@@ -6,9 +6,9 @@ resource "checkpoint_management_host" "test_host" {
 }
 
 resource "checkpoint_management_host" "localhost" {
-  name         = "localhost"
-  ipv4_address = "127.0.0.1"
-  color        = "blue"
+  name            = "localhost"
+  ipv4_address    = "127.0.0.1"
+  color           = "blue"
   ignore_warnings = true
 }
 

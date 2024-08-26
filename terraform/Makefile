@@ -2,7 +2,12 @@
 welcome:
 	echo "Welcome"
 
-
+clu:
+	az vm list-ip-addresses -g  58-ha2vmss  -o table
+clutopo:
+	 /workspaces/chkp-vmss-workshop/terraform/11-ha2vmss/gettopo.sh 
+routes:
+	az network route-table route list -g 58-linux --route-table-name linux-rt-tf --output table
 
 sp:
 	./00-azsp/create-az-sp.sh

@@ -1,3 +1,14 @@
+resource "random_id" "vmssid" {
+  keepers = {
+    terraform_data = terraform_data.keeper.input
+  }
+  byte_length = 8
+}
+
+resource "terraform_data" "keeper" {
+  input = "aaa"
+}
+
 module "vmss" {
    
   source = "github.com/CheckPointSW/CloudGuardIaaS/terraform/azure/vmss-new-vnet"
@@ -10,7 +21,7 @@ module "vmss" {
   source_image_vhd_uri           = "noCustomUri"
   resource_group_name            = "58-vmss1"
   location                       = "northeurope"
-  vmss_name                      = "vmss1"
+  vmss_name                      = "vmss1${random_id.vmssid.hex}"
   vnet_name                      = "vmss1"
   address_space                  = "10.1.0.0/16"
   subnet_prefixes                = ["10.1.1.0/24", "10.1.2.0/24"]

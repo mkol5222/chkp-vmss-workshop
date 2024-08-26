@@ -27,7 +27,7 @@ module "vmss" {
   subnet_prefixes                = ["10.1.1.0/24", "10.1.2.0/24"]
   backend_lb_IP_address          = 4
   admin_password                 = "Welcome@Home#1984"
-  sic_key                        = "welcomehome1984"
+  sic_key                        = "12345678"
   vm_size                        = "Standard_D3_v2"
   disk_size                      = "100"
   vm_os_sku                      = "sg-byol"

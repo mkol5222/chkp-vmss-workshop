@@ -2,6 +2,11 @@
 welcome:
 	echo "Welcome"
 
+ssh-vmss1:
+	(cd ./01-vmss-a && ./ssh-vmss1.sh)
+ssh-vmss2:
+	(cd ./02-vmss-b && ./ssh-vmss2.sh)
+
 clu:
 	az vm list-ip-addresses -g  58-ha2vmss  -o table
 clutopo:

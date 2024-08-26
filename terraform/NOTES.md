@@ -270,8 +270,13 @@ az group list --output table | grep 58-
 LINUX_IP=$(az vm list-ip-addresses -g  58-linux  -o json | jq -r '.[] | select(.virtualMachine.name == "linux") | .virtualMachine.network.publicIpAddresses[0].ipAddress')
 echo "Linux VM Public IP is $LINUX_IP"
 # IP of VM instances in VMSS
-az vmss  list-instance-public-ips -g 58-vmss1 -n vmss1 -o table
-
+VMSSNAME=$(az vmss list -g 58-vmss1 -o tsv --query '[0].{name:name}')
+az vmss  list-instance-public-ips -g 58-vmss1 -n $VMSSNAME -o table
+VMSS1IP=$(az vmss  list-instance-public-ips -g 58-vmss1 -n $VMSSNAME -o json | jq -r '.[0].ipAddress')
+VMSS2IP=$(az vmss  list-instance-public-ips -g 58-vmss1 -n $VMSSNAME -o json | jq -r '.[1].ipAddress')
+echo "VMSS IPs: $VMSS1IP $VMSS2IP"
+ssh admin@$VMSS1IP
+ssh admin@$VMSS2IP
 
 # devops workstation (Codespace)
 cd /workspaces/chkp-vmss-workshop/terraform/

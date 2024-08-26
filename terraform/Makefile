@@ -74,7 +74,7 @@ cpman-down:
 
 cme:
 	./06-cme/cme.sh
-down: ha2vmss-down linux-down vmss1-down reader-down cpman-down tfbackend-down sp-down 
+down: harole-down ha2vmss-down linux-down vmss1-down reader-down cpman-down tfbackend-down sp-down 
 
 ssh:
 	(cd ./07-ssh && ./setup-ssh.sh)
@@ -99,7 +99,7 @@ ssh-linux:
 
 1stclean:
 	(cd /workspaces/chkp-vmss-workshop/terraform; ./1stcleanyp.sh)
-up: 1stclean sp sa vmss1 reader cpman linux ha2vmss
+up: 1stclean sp sa vmss1 reader cpman linux ha2vmss harole
   
 ssh-cpman:
 	./04-cpman/ssh-cpman.sh
@@ -108,3 +108,8 @@ ssh-ha1:
 	./11-ha2vmss/ssh-ha1.sh
 ssh-ha2:
 	./11-ha2vmss/ssh-ha2.sh
+
+harole:
+	(cd ./12-ha-role && terraform init && terraform apply -auto-approve)
+harole-down:
+	(cd ./12-ha-role && terraform destroy -auto-approve)

@@ -100,6 +100,7 @@ ssh-linux:
 1stclean:
 	(cd /workspaces/chkp-vmss-workshop/terraform; ./1stcleanyp.sh)
 up: 1stclean sp sa cpman vmss1 reader  linux ha2vmss harole
+up-all: cpman vmss1 reader  linux ha2vmss harole
   
 ssh-cpman:
 	./04-cpman/ssh-cpman.sh

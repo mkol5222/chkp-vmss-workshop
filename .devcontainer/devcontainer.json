@@ -6,7 +6,12 @@
 	"image": "mcr.microsoft.com/devcontainers/base:jammy",
 	"features": {
 		"ghcr.io/devcontainers/features/azure-cli:1": {},
-		"ghcr.io/devcontainers-contrib/features/terraform-asdf:2": {}
+		"ghcr.io/devcontainers-contrib/features/terraform-asdf:2": {},
+		"docker-in-docker": {
+			"version": "latest",
+			"moby": true,
+			"dockerDashComposeVersion": "v1"
+		}
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.

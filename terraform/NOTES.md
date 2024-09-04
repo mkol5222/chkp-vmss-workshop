@@ -512,4 +512,15 @@ for i in $(seq 10); do  curl_cli  -k http://13.79.38.198 -m1 -s;  done | sort | 
 # vmss2 WestEurope
 for i in $(seq 10); do  curl_cli  -k http://108.143.45.211 -m1 -s;  done | sort | uniq -c
 while true; do echo; date; for i in $(seq 10); do  curl_cli  -k http://13.80.16.223 -m1 -s;  done | sort | uniq -c; done
+
+# AZ LB status
+
+
+az network lb address-pool show -n  backend-lb-pool --lb-name backend-lb -g 58-vmss1 -o table
+
+az network lb probe show --lb-name backend-lb -n backend-lb -g 58-vmss1 -o table
+
+az extension add --name resource-graph
+
+
 ```

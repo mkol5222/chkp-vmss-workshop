@@ -87,6 +87,14 @@ linux-down:
 # ssh-linux:
 # 	ssh linux
 
+watch-cluster:
+	watch -d 'az vm list-ip-addresses -g  58-ha2vmss  -o table'
+watch-ha: watch-cluster
+watch-routes:
+	watch -d 'make routes'
+watch-rt: watch-routes
+watch-vmss:
+	./01-vmss-a/watch-vmss.sh
 
 fwon:
 	(cd ./08-linux && make fwon)

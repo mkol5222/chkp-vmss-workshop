@@ -437,6 +437,8 @@ az group list --output table | grep 58-
 # CME helpers on cpman
 curl_cli -k -OL https://raw.githubusercontent.com/joe-at-cp/checkpoint-cme-helper/main/cme_helper.sh
 curl_cli -k -OL https://raw.githubusercontent.com/joe-at-cp/checkpoint-cme-helper/main/gw_helper.sh
+chmod +x cme_helper.sh
+chmod +x gw_helper.sh
 autoprov_cfg set management -cs /home/admin/cme_helper.sh
 autoprov_cfg set template -tn vmss_template -ia -ips -cg /home/admin/gw_helper.sh
 

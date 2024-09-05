@@ -1,0 +1,11 @@
+#!/bin/bash
+
+export TF_VAR_server=$(cd 04-cpman/; terraform show -json | jq -r '.values.root_module.child_modules[0].resources[]|select(.address=="module.cpman.azurerm_public_ip.public-ip")|.values.ip_address' )
+echo "Server IP: $TF_VAR_server"
+
+(cd ./20-lists && terraform init -backend-config "storage_account_name=58tfbackend21745$(cat ../sa-random.txt)" && terraform apply -auto-approve)
+
+echo "Sleeping for few seconds before publishing policy"
+sleep 5
+echo "Publishing policy"
+(cd ./20-lists && terraform apply -auto-approve -var publish=true)

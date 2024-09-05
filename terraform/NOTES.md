@@ -523,4 +523,47 @@ az network lb probe show --lb-name backend-lb -n backend-lb -g 58-vmss1 -o table
 az extension add --name resource-graph
 
 
+
+### second VIP
+
+$FWDIR/scripts/azure_ha_cli.py restart
+# $FWDIR/conf/azure-ha.json
+VIP2=$((cd /workspaces/chkp-vmss-workshop/terraform/11-ha2vmss; terraform output -json vip2) | jq -c -r '{ "name": "cluster-vip2", "addr":"10.1.1.108", "pub": .id}')
+echo "export VIP2='$VIP2'"
+
+# 
+make ssh-ha1
+
+export VIP2='{"name":"cluster-vip2","addr":"10.1.1.108","pub":"/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/publicIPAddresses/ha-vip2"}'
+
+VIP2NAME=$(echo "$VIP2" | jq -r .name)
+VIP2ADDR=$(echo "$VIP2" | jq -r .addr)
+VIP2PUB=$(echo "$VIP2" | jq -r .pub)
+cat $FWDIR/conf/azure-ha.json | jq --arg n "$VIP2NAME" --arg a "$VIP2ADDR" --arg p "$VIP2PUB" -r '.clusterNetworkInterfaces.eth0[1].name=$n | .clusterNetworkInterfaces.eth0[1].addr=$a |  .clusterNetworkInterfaces.eth0[1].pub=$p' | tee $FWDIR/conf/azure-ha.json.new
+
+cp $FWDIR/conf/azure-ha.json $FWDIR/conf/azure-ha.bak
+cp $FWDIR/conf/azure-ha.json.new $FWDIR/conf/azure-ha.json
+jq -r . $FWDIR/conf/azure-ha.json
+
+$FWDIR/scripts/azure_ha_cli.py restart
+tail -f $FWDIR/log/azure_had.elg
+
+# 
+make ssh-ha2
+
+export VIP2='{"name":"cluster-vip2","addr":"10.1.1.108","pub":"/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/publicIPAddresses/ha-vip2"}'
+
+export VIP2='{"name":"cluster-vip2","addr":"10.1.1.108","pub":"/subscriptions/f4ad5e85-ec75-4321-8854-ed7eb611f61d/resourceGroups/58-vmss1/providers/Microsoft.Network/publicIPAddresses/ha-vip2"}'
+
+VIP2NAME=$(echo "$VIP2" | jq -r .name)
+VIP2ADDR=$(echo "$VIP2" | jq -r .addr)
+VIP2PUB=$(echo "$VIP2" | jq -r .pub)
+cat $FWDIR/conf/azure-ha.json | jq --arg n "$VIP2NAME" --arg a "$VIP2ADDR" --arg p "$VIP2PUB" -r '.clusterNetworkInterfaces.eth0[1].name=$n | .clusterNetworkInterfaces.eth0[1].addr=$a |  .clusterNetworkInterfaces.eth0[1].pub=$p' | tee $FWDIR/conf/azure-ha.json.new
+
+cp $FWDIR/conf/azure-ha.json $FWDIR/conf/azure-ha.bak
+cp $FWDIR/conf/azure-ha.json.new $FWDIR/conf/azure-ha.json
+jq -r . $FWDIR/conf/azure-ha.json
+
+$FWDIR/scripts/azure_ha_cli.py restart
+tail -f $FWDIR/log/azure_had.elg
 ```

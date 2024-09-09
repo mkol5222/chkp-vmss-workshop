@@ -566,4 +566,8 @@ jq -r . $FWDIR/conf/azure-ha.json
 
 $FWDIR/scripts/azure_ha_cli.py restart
 tail -f $FWDIR/log/azure_had.elg
+
+
+# if CME install failed
+/opt/AutoUpdater/latest/bin/autoupdatercli install /var/log/upload/Check_Point_CME_AUTOUPDATE_Bundle_T276_AutoUpdate.tar ignore-install-mutex
 ```

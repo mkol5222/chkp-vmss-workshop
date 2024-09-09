@@ -105,6 +105,7 @@ fwoff:
 ssh-linux:
 	(cd ./08-linux && make ssh)
 
+clean: 1stclean
 1stclean:
 	(cd /workspaces/chkp-vmss-workshop/terraform; ./1stcleanyp.sh)
 up: 1stclean sp sa cpman vmss1 reader  linux ha2vmss harole

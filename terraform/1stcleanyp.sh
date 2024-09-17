@@ -15,10 +15,11 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
     exit 1
 fi
-rm -f /workspaces/chkp-vmss-workshop/terraform/sp-random.txt
-rm -f /workspaces/chkp-vmss-workshop/terraform/sa-random.txt
-(cd /workspaces/chkp-vmss-workshop/terraform/01-vmss-a; rm -rf .terraform )
-(cd /workspaces/chkp-vmss-workshop/terraform/04-cpman; rm -rf .terraform )
-(cd /workspaces/chkp-vmss-workshop/terraform/03-reader; rm -rf .terraform )
-(cd /workspaces/chkp-vmss-workshop/terraform/05-policy; rm -rf .terraform )
-(cd /workspaces/chkp-vmss-workshop/terraform/11-ha2vmss; rm -rf .terraform )
+rm -f ./sp-random.txt
+rm -f ./sa-random.txt
+rm -f ./reader.json
+(cd ./01-vmss-a; rm -rf .terraform )
+(cd ./04-cpman; rm -rf .terraform )
+(cd ./03-reader; rm -rf .terraform )
+(cd ./05-policy; rm -rf .terraform )
+(cd ./11-ha2vmss; rm -rf .terraform )

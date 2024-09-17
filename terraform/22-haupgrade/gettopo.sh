@@ -4,20 +4,20 @@
 # az network nic show -g  58-ha2vmss -n ha1-eth0 | jq -r '.ipConfigurations[0].publicIPAddress.id'
 
 # VIP
-VIP=$(az network nic show -g  58-ha2vmss -n ha1-eth0 | jq -r '.ipConfigurations[1].privateIPAddress')
-VIP_PUB=$(az network public-ip show --ids $(az network nic show -g  58-ha2vmss -n ha1-eth0 | jq -r '.ipConfigurations[1].publicIPAddress.id') | jq -r '.ipAddress')
+VIP=$(az network nic show -g   58-ha2  -n ha1-eth0 | jq -r '.ipConfigurations[1].privateIPAddress')
+VIP_PUB=$(az network public-ip show --ids $(az network nic show -g  58-ha2 -n ha1-eth0 | jq -r '.ipConfigurations[1].publicIPAddress.id') | jq -r '.ipAddress')
 echo "VIP: $VIP ($VIP_PUB)"
 
 # HA1
-HA1_ETH0=$(az network nic show -g  58-ha2vmss -n ha1-eth0 | jq -r '.ipConfigurations[0].privateIPAddress')
-HA1_ETH0_PUB=$(az network public-ip show --ids $(az network nic show -g  58-ha2vmss -n ha1-eth0 | jq -r '.ipConfigurations[0].publicIPAddress.id') | jq -r '.ipAddress')
-HA1_ETH1=$(az network nic show -g  58-ha2vmss -n ha1-eth1 | jq -r '.ipConfigurations[0].privateIPAddress')
+HA1_ETH0=$(az network nic show -g  58-ha2 -n ha1-eth0 | jq -r '.ipConfigurations[0].privateIPAddress')
+HA1_ETH0_PUB=$(az network public-ip show --ids $(az network nic show -g  58-ha2 -n ha1-eth0 | jq -r '.ipConfigurations[0].publicIPAddress.id') | jq -r '.ipAddress')
+HA1_ETH1=$(az network nic show -g  58-ha2 -n ha1-eth1 | jq -r '.ipConfigurations[0].privateIPAddress')
 echo "HA1: $HA1_ETH0 ($HA1_ETH0_PUB) $HA1_ETH1"
 
 # HA2
-HA2_ETH0=$(az network nic show -g  58-ha2vmss -n ha2-eth0 | jq -r '.ipConfigurations[0].privateIPAddress')
-HA2_ETH0_PUB=$(az network public-ip show --ids $(az network nic show -g  58-ha2vmss -n ha2-eth0 | jq -r '.ipConfigurations[0].publicIPAddress.id') | jq -r '.ipAddress')
-HA2_ETH1=$(az network nic show -g  58-ha2vmss -n ha2-eth1 | jq -r '.ipConfigurations[0].privateIPAddress')
+HA2_ETH0=$(az network nic show -g  58-ha2 -n ha2-eth0 | jq -r '.ipConfigurations[0].privateIPAddress')
+HA2_ETH0_PUB=$(az network public-ip show --ids $(az network nic show -g  58-ha2 -n ha2-eth0 | jq -r '.ipConfigurations[0].publicIPAddress.id') | jq -r '.ipAddress')
+HA2_ETH1=$(az network nic show -g  58-ha2 -n ha2-eth1 | jq -r '.ipConfigurations[0].privateIPAddress')
 echo "HA2: $HA2_ETH0 ($HA2_ETH0_PUB) $HA2_ETH1"
 
 # whole table
@@ -36,7 +36,7 @@ echo
 
 cat <<EOF
 # Add simple cluster
-mgmt_cli -r true add simple-cluster name "ha2vmss"\
+mgmt_cli -r true add simple-cluster name "ha-upgrade"\
     color "pink"\
     version "R81.20"\
     ip-address "${VIP_PUB}"\

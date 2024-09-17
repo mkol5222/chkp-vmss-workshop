@@ -5,7 +5,7 @@ terraform {
     resource_group_name  = "58-tfbackend"
     storage_account_name = "58tfbackend21745"
     container_name       = "tfstate"
-    key                  = "58-ha2vmss-tf-terraform.tfstate"
+    key                  = "58-ha2-tf-terraform.tfstate"
   }
 }
 
@@ -19,7 +19,7 @@ module "ha" {
 
 
   source_image_vhd_uri           = "noCustomUri"
-  resource_group_name            = "58-ha2vmss"
+  resource_group_name            = "58-ha2"
   cluster_name                   = "ha"
   location                       = "northeurope"
 
@@ -27,8 +27,8 @@ module "ha" {
   vnet_resource_group            =  var.vnet_resource_group # "existing-vnet"
   frontend_subnet_name           =  var.frontend_subnet_name # "frontend"
   backend_subnet_name            =  var.backend_subnet_name # "backend"
-  frontend_IP_addresses          = [105, 106, 107]
-  backend_IP_addresses           = [105, 106, 107]
+  frontend_IP_addresses          = [205, 206, 207]
+  backend_IP_addresses           = [205, 206, 207]
   admin_password                 = "Welcome@Home#1984"
   smart_1_cloud_token_a          = ""
   smart_1_cloud_token_b          = ""

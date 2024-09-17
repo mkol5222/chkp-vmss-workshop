@@ -6,6 +6,8 @@ fwon:
 
 haon:
 	terraform apply -auto-approve -var route_through_firewall=true -var nexthop="10.1.2.105"
+ha2on:
+	terraform apply -auto-approve -var route_through_firewall=true -var nexthop="10.1.2.205"
 
 fwoff:
 	terraform apply -auto-approve -var route_through_firewall=false

@@ -11,6 +11,8 @@ clu:
 	az vm list-ip-addresses -g  58-ha2vmss  -o table
 clutopo:
 	./11-ha2vmss/gettopo.sh 
+clutopo2:
+	./22-haupgrade/gettopo.sh 
 routes:
 	az network route-table route list -g 58-linux --route-table-name linux-rt-tf --output table
 
@@ -38,6 +40,11 @@ ha2vmss:
 	(cd ./11-ha2vmss && terraform init  -backend-config "storage_account_name=58tfbackend21745$$(cat ../sa-random.txt)" && terraform apply -auto-approve)
 ha2vmss-down:
 	(cd ./11-ha2vmss && terraform destroy -auto-approve)
+
+haupgrade:
+	(cd ./22-haupgrade && terraform init  -backend-config "storage_account_name=58tfbackend21745$$(cat ../sa-random.txt)" && terraform apply -auto-approve)
+haupgrade-down:
+	(cd ./22-haupgrade && terraform destroy -auto-approve)
 
 
 ha:
@@ -89,6 +96,8 @@ linux-down:
 
 watch-cluster:
 	watch -d 'az vm list-ip-addresses -g  58-ha2vmss  -o table'
+watch-cluster2:
+	watch -d 'az vm list-ip-addresses -g  58-ha2  -o table'
 watch-ha: watch-cluster
 watch-routes:
 	watch -d 'make routes'
@@ -100,6 +109,8 @@ fwon:
 	(cd ./08-linux && make fwon)
 haon:
 	(cd ./08-linux && make haon)
+ha2on:
+	(cd ./08-linux && make ha2on)
 fwoff:
 	(cd ./08-linux && make fwoff)
 ssh-linux:

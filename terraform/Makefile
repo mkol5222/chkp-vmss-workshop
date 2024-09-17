@@ -9,6 +9,8 @@ ssh-vmss2:
 
 clu:
 	az vm list-ip-addresses -g  58-ha2vmss  -o table
+clu2:
+	az vm list-ip-addresses -g  58-ha2  -o table
 clutopo:
 	./11-ha2vmss/gettopo.sh 
 clutopo2:
@@ -81,7 +83,7 @@ cpman-down:
 
 cme:
 	./06-cme/cme.sh
-down: harole-down ha2vmss-down linux-down vmss1-down reader-down cpman-down tfbackend-down sp-down 
+down: ha2vmss-down harole-down linux-down vmss1-down reader-down cpman-down tfbackend-down sp-down 
 
 ssh:
 	(cd ./07-ssh && ./setup-ssh.sh)

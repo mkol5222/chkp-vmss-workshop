@@ -56,7 +56,7 @@ mgmt_cli -r true add simple-cluster name "ha-upgrade"\
     interfaces.2.topology-settings.ip-address-behind-this-interface "network defined by the interface ip and net mask"\
     interfaces.2.topology-settings.interface-leads-to-dmz false\
     interfaces.2.anti-spoofing false \
-    members.1.name "ha1"\
+    members.1.name "ha1upgarde"\
     members.1.one-time-password "welcomehome1984"\
     members.1.ip-address "${HA1_ETH0_PUB}"\
     members.1.interfaces.1.name "eth0"\
@@ -65,7 +65,7 @@ mgmt_cli -r true add simple-cluster name "ha-upgrade"\
     members.1.interfaces.2.name "eth1"\
     members.1.interfaces.2.ip-address "${HA1_ETH1}"\
     members.1.interfaces.2.network-mask "255.255.255.0"\
-    members.2.name "ha2"\
+    members.2.name "ha2upgrade"\
     members.2.one-time-password "welcomehome1984"\
     members.2.ip-address "${HA2_ETH0_PUB}"\
     members.2.interfaces.1.name "eth0"\

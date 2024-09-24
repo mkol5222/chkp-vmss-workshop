@@ -14,7 +14,7 @@ terraform {
 # https://github.com/CheckPointSW/CloudGuardIaaS/tree/master/terraform/azure/management-existing-vnet
 module "cpman" {
     // depends_on = [ azurerm_subnet.cpman_subnet ]
-  source = "github.com/CheckPointSW/CloudGuardIaaS/terraform/azure/management-new-vnet"
+  source = "github.com/mkol5222/cloudGuardIaaS-2024-09-24/terraform/azure/management-new-vnet"
   
   
   

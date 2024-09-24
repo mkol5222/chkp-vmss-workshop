@@ -11,7 +11,7 @@ resource "random_id" "vmssid" {
 
 module "vmss" {
    
-  source = "github.com/CheckPointSW/CloudGuardIaaS/terraform/azure/vmss-new-vnet"
+  source = "github.com/mkol5222/cloudGuardIaaS-2024-09-24/terraform/azure/vmss-new-vnet"
 
   client_secret                  = local.spfile.sp.client_secret
   client_id                      = local.spfile.sp.client_id

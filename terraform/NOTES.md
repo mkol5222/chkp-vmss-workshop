@@ -570,4 +570,7 @@ tail -f $FWDIR/log/azure_had.elg
 
 # if CME install failed
 /opt/AutoUpdater/latest/bin/autoupdatercli install /var/log/upload/Check_Point_CME_AUTOUPDATE_Bundle_T276_AutoUpdate.tar ignore-install-mutex
+
+# appctrl and URLF cme:
+autoprov_cfg set template -tn vmss_template -ia -ips -appi -uf
 ```

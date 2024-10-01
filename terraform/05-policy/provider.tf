@@ -26,5 +26,6 @@ provider "checkpoint" {
   password = "Welcome@Home#1984"
   server   = var.server
   context  = "web_api"
+  auto_publish_batch_size = "200"
 }
 

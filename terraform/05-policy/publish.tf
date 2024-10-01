@@ -8,6 +8,8 @@ resource "checkpoint_management_publish" "example" {
   count    = var.publish ? 1 : 0
   triggers = ["${timestamp()}"]
 
+  run_publish_on_destroy = true
+
   depends_on = [
     resource.checkpoint_management_azure_data_center_server.azureDC,
     resource.checkpoint_management_data_center_query.allVMs,

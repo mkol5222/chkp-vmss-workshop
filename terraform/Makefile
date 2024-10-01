@@ -132,6 +132,11 @@ ssh-ha1:
 ssh-ha2:
 	./11-ha2vmss/ssh-ha2.sh
 
+ssh-upha1:
+	./22-haupgrade/ssh-ha1.sh
+ssh-upha2:
+	./22-haupgrade/ssh-ha2.sh
+
 harole:
 	(cd ./12-ha-role && terraform init && terraform apply -auto-approve)
 harole-down:

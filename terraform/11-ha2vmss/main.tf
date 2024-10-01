@@ -10,7 +10,7 @@ terraform {
 }
 
 module "ha" {
-  source = "github.com/CheckPointSW/CloudGuardIaaS/terraform/azure/high-availability-existing-vnet"
+  source = "github.com/mkol5222/cloudGuardIaaS-2024-09-24/terraform/azure/high-availability-existing-vnet"
 
   client_secret   = local.spfile.sp.client_secret
   client_id       = local.spfile.sp.client_id

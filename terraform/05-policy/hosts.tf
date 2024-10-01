@@ -17,3 +17,9 @@ resource "checkpoint_management_host" "linux" {
   ipv4_address = "10.68.2.4"
   color        = "blue"
 }
+
+resource "checkpoint_management_host" "martin1" {
+  name         = "martin1"
+  ipv4_address = "10.68.88.99"
+  color        = "blue"
+}

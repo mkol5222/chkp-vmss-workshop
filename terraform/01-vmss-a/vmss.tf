@@ -37,8 +37,8 @@ module "vmss" {
   allow_upload_download          = true
   authentication_type            = "Password"
   availability_zones_num         = "1"
-  minimum_number_of_vm_instances = 2
-  maximum_number_of_vm_instances = 10
+  minimum_number_of_vm_instances = 1
+  maximum_number_of_vm_instances = 1
   management_name                = "mgmt"
   management_IP                  = ""
   management_interface           = "eth0-public"

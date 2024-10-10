@@ -573,4 +573,8 @@ tail -f $FWDIR/log/azure_had.elg
 
 # appctrl and URLF cme:
 autoprov_cfg set template -tn vmss_template -ia -ips -appi -uf
+
+# https://self-signed.badssl.com/
+
+
 ```
